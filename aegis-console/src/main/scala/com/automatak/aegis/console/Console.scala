@@ -40,15 +40,17 @@ object Console {
   def main(args: Array[String]): Unit = {
 
     def execute(args: Array[String]): RunResult = {
+      val reporter = ConsoleTestReporter
+
       Parser(args.toList) match {
         case Right(d) =>
-          Configuration.read(d, ConsoleTestReporter) match {
+          Configuration.read(d, reporter) match {
             case Success(config) =>
               if (config.help) {
                 printBasicUsage()
                 RunSuccess
               } else {
-                run(config)
+                run(config, reporter)
               }
             case Failure(ex) =>
               ConfigError(ex.getMessage)
@@ -74,14 +76,20 @@ object Console {
     sys.exit(exitcode)
   }
 
-  def run(options: Configuration.Options): RunResult = {
+  def run(options: Configuration.Options, reporter: TestLogger): RunResult = {
 
     val channel = options.resources.factory.open()
 
     val driver = new dnp3.DefaultTestDriver(
-      new DNP3LoggerAdapter(ConsoleTestReporter),
+      new DNP3LoggerAdapter(reporter),
       channel,
       options.dnp3)
+
+    val detector = new dnp3.FailureDetector(options.dnp3.dest, options.dnp3.src, true)
+
+    if (!options.dnp3.skipPreTest) {
+      detector.detectFailure(driver, reporter, options.dnp3.retries, 100)
+    }
 
     val apdu = Apdu(
       AppCtrl(true, true, false, false, options.dnp3.appseq),
@@ -91,7 +99,9 @@ object Console {
 
     driver.writeAPDU(apdu)
 
-    Thread.sleep(10000)
+    if (!options.dnp3.skipPostTest) {
+      detector.detectFailure(driver, reporter, options.dnp3.retries, 100)
+    }
 
     RunSuccess
   }
