@@ -47,7 +47,7 @@ object DNP3Options {
   private val src = IntegerOption("src", "link layer source", IntMinMax.bounds(0, 65535), Some(1))
   private val function = IntegerOption("func", "app layer function", IntMinMax.bounds(0, 255), Some(1))
   private val appSeq = IntegerOption("appseq", "app layer sequence #", IntMinMax.bounds(0, 15), Some(0))
-  private val headers = StringOption("app headers", "application layer data to transmit in hex", Some(""))
+  private val headers = StringOption("headers", "application layer data to transmit in hex", Some(""))
   private val retries = IntegerOption("retries", "Number of link status retries", IntMinMax.bounds(3, 1000), Some(10))
   private val linkTimeout = IntegerOption("linktimeout", "link layer timeout in milliseconds", IntMinMax.minOnly(10), Some(1000))
   private val appTimeout = IntegerOption("apptimeout", "application layer timeout in milliseconds", IntMinMax.minOnly(30), Some(2000))
