@@ -1,6 +1,24 @@
 # Building
 
-Install [Maven](https://maven.apache.org/) and JDK 1.8.
+Install [Maven](https://maven.apache.org/)
+
+On Debian:
+
+```
+> sudo apt-get install maven mvn 
+```
+
+Install JDK 1.8
+
+On Debian:
+
+```
+> sudo add-apt-repository ppa:openjdk-r/ppa
+> sudo apt-get update 
+> sudo apt-get install openjdk-8-jdk
+```
+
+To build and run tests:
 
 ```
 > mvn package
