@@ -35,12 +35,12 @@ object DNP3Options {
       d <- dest.get(dictionary)
       s <- src.get(dictionary)
       f <- function.get(dictionary)
-      s <- appSeq.get(dictionary)
+      seq <- appSeq.get(dictionary)
       r <- retries.get(dictionary)
       l <- linkTimeout.get(dictionary)
       a <- appTimeout.get(dictionary)
       data <- headers.get(dictionary)
-    } yield DNP3Options(UInt16LE(d), UInt16LE(s), f.toByte, s.toByte, fromHex(data), r, l, a)
+    } yield DNP3Options(UInt16LE(d), UInt16LE(s), f.toByte, seq.toByte, fromHex(data), r, l, a)
   }
 
   private val dest = IntegerOption("dest", "link layer destination", IntMinMax.bounds(0, 65535), Some(1024))
