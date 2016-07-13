@@ -1,10 +1,16 @@
-**Access is provided under the Terms and Conditions of your non-disclosure agreement**
+# Building
 
-Documentation is in PDF format in the "Welcome to Aegis" repository
+Install [Maven](https://maven.apache.org/) and JDK 1.8.
 
----- 0.1.1 ----
+```
+> mvn package
+```
 
-- Added a specialized test case for masters (pid = octetfuzz). This unsolicited frame is causing issues for many masters across the industry.
+The output will be in aegis-console\target\appassembler\bin
 
-- Added a "-repeats" flags that allows you to repeat the specified test cases multiple times.  Very useful if the bug is non-deterministic or you're stressing a memory leak.
+You can then invoke the program using the built .bat or .sh file, e.g.:
+
+```
+> ./dnp3-client -help
+```
 
