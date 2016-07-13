@@ -2,15 +2,11 @@
 
 Install [Maven](https://maven.apache.org/)
 
-On Debian:
-
 ```
 > sudo apt-get install maven mvn 
 ```
 
 Install JDK 1.8
-
-On Debian:
 
 ```
 > sudo add-apt-repository ppa:openjdk-r/ppa
